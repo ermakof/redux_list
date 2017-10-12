@@ -1,5 +1,5 @@
 /**
- * Created by ermakof on 11.10.17.
+ * Created by ab.ermakof on 11.10.17.
  */
 import {combineReducers} from "redux";
 

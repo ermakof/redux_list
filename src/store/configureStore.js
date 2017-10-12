@@ -1,5 +1,5 @@
-/**
- * Created by Sinires on 18.07.2016.
+/*
+ * Created by ab.ermakof on 12.10.2017.
  */
 import {createStore, applyMiddleware, compose} from "redux";
 import rootReducer from "../reducers/index";
@@ -9,15 +9,17 @@ import dispatcher from '../middleware/DispatcherConnector'
 
 export default function configureStore(initialState) {
     const logger = createLogger();
-    let store = {};
-    store = createStore(rootReducer,
+    let store = createStore(
+        rootReducer,
         initialState,
-        applyMiddleware(dispatcher, thunk)
+        compose(
+            applyMiddleware(dispatcher, thunk, logger),
+            window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        )
     );
-
     if (module.hot) {
         module.hot.accept('../reducers', () => {
-            const nextRootReducer = require('../reducers/index')
+            const nextRootReducer = require('../reducers/index');
             store.replaceReducer(nextRootReducer)
         })
     }

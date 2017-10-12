@@ -1,9 +1,19 @@
-import dispatcher from '../../class/event/Dispatcher'
+/*
+ * Created by ab.ermakof on 11.10.2017.
+ */
+
+import Dispatcher from '../class/event/Dispatcher'
 import {
     DISPATCHER_EVENT,
     DISPATCHER_FIRE
-} from '../../constants/DipatcherConnector'
-import Listener from "../../class/event/Listener"
+} from '../constants/DipatcherConnector'
+import Listener from "../class/event/Listener"
+
+/**
+ * Инициализация событийной шины
+ * @type {Dispatcher}
+ */
+let dispatcher = new Dispatcher();
 
 export default (function () {
     let connector = null;
@@ -13,15 +23,13 @@ export default (function () {
             store.dispatch({
                 type: DISPATCHER_EVENT,
                 payload: event,
-                //originalType хоть и нарушает соглашения по redux, но не протеворечит им, будет использоваться,
-                // так как поляна type будет использоваться для однозначной информации о том, что событие пришло извне.
                 originalType: type
             });
         }
 
         if (!connector) {
             connector = true;
-            //будущие механизмы фильтрации данных прикручивать здесь
+            console.log(dispatcher);
             dispatcher.addListener(new Listener(sendDispatcherEvent2ReduxEvent, "*"));
         }
 

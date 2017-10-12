@@ -1,5 +1,5 @@
 /**
- * Created by sinires on 27.04.16.
+ * Created by ab.ermakof on 12.10.17.
  */
 
 import Listener from "./Listener";
@@ -7,7 +7,7 @@ import Listener from "./Listener";
 "use strict";
 /**
  * Dispatcher
- * Интерфейс генерации событий внутренней шины данных
+ * Интерфейс генерации событий
  */
 class Dispatcher {
     /**
@@ -33,15 +33,11 @@ class Dispatcher {
      * @param {object} event
      */
     fire(event) {
-        if (event.toServer) {
-            this._sendEvent2Streams(event);
-        } else {
-            this._send2Listeners(event)
-        }
+        this._send2Listeners(event)
     }
 
     /**
-     * Метод отправки события по внутренней шине данных
+     * Метод отправки события
      * @param {object} event
      * @private
      */
@@ -56,7 +52,7 @@ class Dispatcher {
         }
         let type = event.type;
         if (listeners && listeners[type])
-            for (var key in listeners[type])
+            for (let key in listeners[type])
                 if (listeners[type].hasOwnProperty(key)) {
                     const id = key;
                     setTimeout(function () {
@@ -65,36 +61,13 @@ class Dispatcher {
                     }, 0);
                 }
 
-        for (var key in listeners['*']) {
+        for (let key in listeners['*']) {
             if (listeners['*'].hasOwnProperty(key)) {
                 const id = key;
                 setTimeout(function () {
                     if (listeners['*'].hasOwnProperty(id))
                         listeners['*'][id].fire(event);
                 }, 0);
-            }
-        }
-    }
-
-    /**
-     * Метод отправлки события в подключенные стримы websocket в зависимости от настроек stream карты запросов
-     * @param {object} event
-     * @private
-     */
-    _sendEvent2Streams(event) {
-        let self = this;
-        let callback = event.callback;
-        for (let stream of this.streamList) {
-            if (stream.map && stream.map.includes(event.type)) {
-                let listener = new Listener(callback);
-                if (callback) {
-                    self.addListener(listener);
-                }
-
-                setTimeout(()=> {
-                    event.id = listener.id;
-                    stream.send2Server(event)
-                }, 0)
             }
         }
     }
@@ -150,13 +123,6 @@ class Dispatcher {
         }
     }
 
-    /**
-     * Метод регистрации стрима на объекте Dispatcher
-     * @param {Socket} stream
-     */
-    regStream(stream) {
-        this.streamList.push(stream);
-    }
 }
 
 export default Dispatcher;

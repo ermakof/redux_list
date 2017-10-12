@@ -3,7 +3,7 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var config = {
-    context: __dirname + "/js",
+    context: __dirname + "/src",
     entry: {
         admin: "./index.js"
     },

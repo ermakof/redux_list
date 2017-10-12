@@ -1,0 +1,85 @@
+@header-background-color: #C5D7F2;
+@header-text-color: #ffffff;
+
+@background-color: #f0f0f0;
+@header-color: #39a6d8;
+
+@header-height: 60px;
+@footer-height: 40px;
+
+html, body, #root, #root >div{
+  height: 1px;
+  max-height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.horizontal-flex-block{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.vertical-flex-block{
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.button{
+  padding: 5px;
+  border: solid 1px ;
+  border-radius: 30%;
+  &:hover{
+    cursor: pointer;
+  }
+}
+
+.body{
+  .vertical-flex-block;
+}
+
+.controls{
+  align-self: flex-end;
+  margin: 5px;
+}
+
+.panel-layout {
+  max-width: 350px;
+  min-width: 350px;
+  height: 100%;
+  max-height: 100%;
+  min-height: 100%;
+  background: white;
+  padding: 10px;
+}
+
+.p1 {
+  color: red;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+.error{
+  &-field{
+    &-input{
+      border-color: red ;
+    }
+
+    &-label{
+      color: red;
+    }
+  }
+  &-text{
+    color: red;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    max-width: 400px;
+    line-height: 1.5;
+    .horizontal-flex-block;
+    margin: auto;
+    text-align: center;
+  }
+}
